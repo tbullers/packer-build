@@ -1,0 +1,38 @@
+{
+  "builders":
+  [
+    {
+      "type": "qemu",
+      "iso_url": "file:///home/tbullers/packer/os-iso-images/CentOS-6.7-x86_64-bin-DVD1.iso",
+      "iso_checksum": "51f90e8ddd2ea199780065eaf75130ad",
+      "iso_checksum_type": "md5",
+      "output_directory": "output-images/centos",
+      "ssh_wait_timeout": "10m",
+      "shutdown_command": "shutdown -P now",
+      "disk_size": 20000,
+      "format": "raw",
+      "headless": true, 
+      "qemu_binary": "/usr/bin/qemu-system-x86_64",
+      "accelerator": "kvm",
+      "qemuargs": [
+         [ "-m", "2048" ],
+         [ "-smp", "1,sockets=1,cores=1,threads=1" ]
+      ],      
+      "http_directory": "httpdir",
+      "http_port_min": 10082,
+      "http_port_max": 10089,
+      "ssh_host_port_min": 2222,
+      "ssh_host_port_max": 2229,
+      "ssh_username": "root",
+      "ssh_password": "Easy.1234",
+      "ssh_port": 22,
+      "vm_name": "centos",
+      "net_device": "virtio-net",
+      "disk_interface": "virtio",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/working-ks.cfg<enter><wait>"
+      ]
+    }
+  ]
+}
